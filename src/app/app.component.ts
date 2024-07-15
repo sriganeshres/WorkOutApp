@@ -12,7 +12,7 @@ import {
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['../styles.css'],
 })
 export class AppComponent {
   title = 'WorkOutApp';

@@ -1,5 +1,5 @@
-<form [formGroup]="createForm" (ngSubmit)="submitApplication()">
-  <div>
+<form [formGroup]="createForm" (ngSubmit)="submitApplication()" class="flex flex-col">
+  <div class="flex">
     <label for="username">Username:</label>
     <input id="username" formControlName="username" />
     <div *ngIf="createForm.get('username')?.invalid && createForm.get('username')?.touched">
