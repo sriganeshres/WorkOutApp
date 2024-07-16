@@ -8,7 +8,35 @@ import { Workout } from './workout';
 export class UserService {
   constructor() {}
 
-  users: User[] = [];
+  users: User[] = [
+    {
+      id: 1,
+      userName: 'John Doe',
+      workouts: [
+        { workOutType: 'Running', workOutDuration: 30 },
+        { workOutType: 'Cycling', workOutDuration: 45 },
+      ],
+      totalDuration: 75,
+    },
+    {
+      id: 2,
+      userName: 'Jane Smith',
+      workouts: [
+        { workOutType: 'Swimming', workOutDuration: 60 },
+        { workOutType: 'Running', workOutDuration: 20 },
+      ],
+      totalDuration: 80,
+    },
+    {
+      id: 3,
+      userName: 'Mike Johnson',
+      workouts: [
+        { workOutType: 'Yoga', workOutDuration: 50 },
+        { workOutType: 'Cycling', workOutDuration: 40 },
+      ],
+      totalDuration: 90,
+    },
+  ];
 
   async getAllUsers(): Promise<User[]> {
     return this.users;
@@ -32,5 +60,10 @@ export class UserService {
       };
       this.users.push(newUser);
     }
+  }
+
+  async getUserByID(ID: string): Promise<User | undefined> {
+    console.log('getUserByID is working on type ' + typeof Number(ID));
+    return this.users.find((u) => u.id === Number(ID));
   }
 }

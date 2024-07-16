@@ -1,0 +1,35 @@
+<div class="flex flex-col gap-8 w-[50%] mx-auto">
+  <div class="container mt-28 p-6 rounded-xl bg-gray-100" *ngIf="user">
+    <div class="main-content">
+      <h1 class="font-semibold pb-4 text-center">
+        {{ user.userName }}'s workout progress
+      </h1>
+      <div class="chart-container flex justify-center">
+        <ngx-charts-bar-vertical
+          [results]="chartData"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          xAxisLabel="Workout Type"
+          yAxisLabel="Duration (minutes)"
+          [scheme]="colorScheme"
+          [barPadding]="20"
+          [showGridLines]="true"
+          [roundDomains]="true"
+          [yAxisTickFormatting]="formatYAxisTick"
+          [yAxisTicks]="getYAxisDomain()"
+        >
+        </ngx-charts-bar-vertical>
+      </div>
+    </div>
+  </div>
+  <button
+    class="mx-auto text-center border border-blue-600 bg-blue-600 p-2 rounded-md text-white"
+    (click)="routeToHome()"
+  >
+    Home
+  </button>
+</div>
+<div *ngIf="!user">Loading...</div>
