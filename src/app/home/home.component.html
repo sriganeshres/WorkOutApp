@@ -1,4 +1,23 @@
 <div class="overflow-x-auto mt-8 w-[60%] mx-auto flex flex-col gap-6">
+  <!-- Search Filters -->
+  <div class="flex flex-row justify-evenly gap-4 w-[90%] mx-auto">
+    <input
+      type="text"
+      placeholder="Search by Name"
+      class="p-2 border rounded-lg border-blue-600"
+      [(ngModel)]="nameFilter"
+      (input)="applyFilters()"
+    />
+    <input
+      type="text"
+      placeholder="Search by Workout Type"
+      class="p-2 border rounded-lg border-blue-600"
+      [(ngModel)]="workoutTypeFilter"
+      (input)="applyFilters()"
+    />
+  </div>
+
+  <!-- User Table -->
   <table
     class="min-w-full divide-y divide-gray-200 border border-gray-300 rounded-lg"
   >
@@ -25,7 +44,7 @@
       </tr>
     </thead>
     <tbody class="bg-white divide-y divide-gray-200">
-      <ng-container *ngFor="let user of users">
+      <ng-container *ngFor="let user of filteredUsers">
         <tr class="hover:bg-gray-100 transition duration-150 ease-in-out">
           <td
             class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-b border-gray-300"
@@ -46,6 +65,8 @@
       </ng-container>
     </tbody>
   </table>
+
+  <!-- Add Workout Button -->
   <div class="mx-auto">
     <button
       (click)="routeToAddWorkout()"
