@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../user.service';
 import { User } from '../user';
 import { Router } from '@angular/router';
+import { Workout } from '../workout';
 
 @Component({
   selector: 'app-home',
@@ -23,5 +24,9 @@ export class HomeComponent {
 
   routeToAddWorkout() {
     this.router.navigate(['/add-workout']);
+  }
+
+  formatWorkoutTypes(workouts: Workout[]): string {
+    return workouts.map((workout) => workout.workOutType).join(', ');
   }
 }
