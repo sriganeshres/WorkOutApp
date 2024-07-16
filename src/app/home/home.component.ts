@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { Workout } from '../workout';
 import { CommonModule } from '@angular/common';
-import { WorkoutService } from '../workout.service';
+import { UserService } from '../user.service';
+import { User } from '../user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +12,16 @@ import { WorkoutService } from '../workout.service';
   styleUrl: '../../styles.css',
 })
 export class HomeComponent {
-  workouts: Workout[] = [];
-  workoutService: WorkoutService = inject(WorkoutService);
+  users: User[] = [];
+  userService: UserService = inject(UserService);
+  router: Router = inject(Router);
   constructor() {
-    this.workoutService.getAllWorkouts().then((workouts: Workout[]) => {
-      this.workouts = workouts;
+    this.userService.getAllUsers().then((users: User[]) => {
+      this.users = users;
     });
+  }
+
+  routeToAddWorkout() {
+    this.router.navigate(['/add-workout']);
   }
 }

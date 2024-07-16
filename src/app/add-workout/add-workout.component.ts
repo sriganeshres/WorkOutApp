@@ -6,8 +6,10 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { WorkoutService } from '../workout.service';
+import { UserService } from '../user.service';
 import { Workout } from '../workout';
+import { User } from '../user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-workout',
@@ -18,8 +20,9 @@ import { Workout } from '../workout';
 })
 export class AddWorkoutComponent implements OnInit {
   workoutTypes = ['Cardio', 'Strength', 'Flexibility', 'Balance'];
-  workOutService: WorkoutService = inject(WorkoutService);
-  workouts: Workout[] = [];
+  userService: UserService = inject(UserService);
+  router: Router = inject(Router);
+  users: User[] = [];
   createForm = new FormGroup({
     userName: new FormControl('', Validators.required),
     workOutType: new FormControl('', Validators.required),
@@ -30,17 +33,17 @@ export class AddWorkoutComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.loadWorkouts();
+    this.loadUsers();
   }
 
-  async loadWorkouts() {
-    this.workouts = await this.workOutService.getAllWorkouts();
+  async loadUsers() {
+    this.users = await this.userService.getAllUsers();
   }
 
   async submitApplication() {
     if (this.createForm.invalid) {
       const errors = [];
-      if (this.createForm.get('username')?.hasError('required')) {
+      if (this.createForm.get('userName')?.hasError('required')) {
         errors.push('Please enter a username.');
       }
       if (this.createForm.get('workOutType')?.hasError('required')) {
@@ -56,13 +59,17 @@ export class AddWorkoutComponent implements OnInit {
     } else {
       const formValue = this.createForm.value;
       const workout: Workout = {
-        userName: formValue.userName || '',
         workOutType: formValue.workOutType || '',
         workOutDuration: formValue.workOutDuration || 0,
       };
-      await this.workOutService.addWorkout(workout);
+      await this.userService.addWorkoutToUser(formValue.userName!, workout);
       this.createForm.reset();
-      this.loadWorkouts();
+      this.loadUsers();
+      this.router.navigate(['/']);
     }
+  }
+
+  routeToHome() {
+    this.router.navigate(['/']);
   }
 }
