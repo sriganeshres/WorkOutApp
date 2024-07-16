@@ -4,4 +4,5 @@ export interface User {
   id: number;
   userName: string;
   workouts: Workout[];
+  totalDuration: number;
 }

@@ -22,11 +22,13 @@ export class UserService {
     const user = this.users.find((u) => u.userName === userName);
     if (user) {
       user.workouts.push(workout);
+      user.totalDuration += workout.workOutDuration;
     } else {
       const newUser: User = {
         id: this.users.length + 1,
         userName,
         workouts: [workout],
+        totalDuration: workout.workOutDuration,
       };
       this.users.push(newUser);
     }
