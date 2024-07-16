@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -7,19 +7,21 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { WorkoutService } from '../workout.service';
+import { Workout } from '../workout';
 
 @Component({
   selector: 'app-add-workout',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-workout.component.html',
-  styleUrl: '../../styles.css',
+  styleUrls: ['../../styles.css'],
 })
-export class AddWorkoutComponent {
+export class AddWorkoutComponent implements OnInit {
   workoutTypes = ['Cardio', 'Strength', 'Flexibility', 'Balance'];
   workOutService: WorkoutService = inject(WorkoutService);
+  workouts: Workout[] = [];
   createForm = new FormGroup({
-    username: new FormControl('', Validators.required),
+    userName: new FormControl('', Validators.required),
     workOutType: new FormControl('', Validators.required),
     workOutDuration: new FormControl(0, [
       Validators.required,
@@ -27,7 +29,15 @@ export class AddWorkoutComponent {
     ]),
   });
 
-  submitApplication() {
+  ngOnInit() {
+    this.loadWorkouts();
+  }
+
+  async loadWorkouts() {
+    this.workouts = await this.workOutService.getAllWorkouts();
+  }
+
+  async submitApplication() {
     if (this.createForm.invalid) {
       const errors = [];
       if (this.createForm.get('username')?.hasError('required')) {
@@ -44,9 +54,15 @@ export class AddWorkoutComponent {
       }
       alert(errors.join('\n'));
     } else {
-      this.workOutService.addWorkout(
-        this.createForm.value
-      );
+      const formValue = this.createForm.value;
+      const workout: Workout = {
+        userName: formValue.userName || '',
+        workOutType: formValue.workOutType || '',
+        workOutDuration: formValue.workOutDuration || 0,
+      };
+      await this.workOutService.addWorkout(workout);
+      this.createForm.reset();
+      this.loadWorkouts();
     }
   }
 }
