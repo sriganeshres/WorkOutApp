@@ -1,28 +1,4 @@
-<form [formGroup]="createForm" (ngSubmit)="submitApplication()" class="flex flex-col">
-  <div class="flex">
-    <label for="username">Username:</label>
-    <input id="username" formControlName="username" />
-    <div *ngIf="createForm.get('username')?.invalid && createForm.get('username')?.touched">
-      <span *ngIf="createForm.get('username')?.hasError('required')">Username is required.</span>
-    </div>
-  </div>
-  <div>
-    <label for="workOutType">Workout Type:</label>
-    <select id="workOutType" formControlName="workOutType">
-      <option value="">Select Workout Type</option>
-      <option *ngFor="let type of workoutTypes" [value]="type">{{ type }}</option>
-    </select>
-    <div *ngIf="createForm.get('workOutType')?.invalid && createForm.get('workOutType')?.touched">
-      <span *ngIf="createForm.get('workOutType')?.hasError('required')">Workout type is required.</span>
-    </div>
-  </div>
-  <div>
-    <label for="workOutDuration">Workout Duration:</label>
-    <input id="workOutDuration" type="number" formControlName="workOutDuration" />
-    <div *ngIf="createForm.get('workOutDuration')?.invalid && createForm.get('workOutDuration')?.touched">
-      <span *ngIf="createForm.get('workOutDuration')?.hasError('required')">Workout duration is required.</span>
-      <span *ngIf="createForm.get('workOutDuration')?.hasError('min')">Workout duration must be greater than 0.</span>
-    </div>
-  </div>
-  <button type="submit">Submit</button>
-</form>
+<main>
+  <div class="inset-0 opacity-5 absolute z-[-1] bgGrid"></div>
+  <router-outlet></router-outlet>
+</main>
